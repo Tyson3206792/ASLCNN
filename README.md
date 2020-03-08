@@ -6,4 +6,4 @@ trained on a few hundred images for each of the classes.
 
 Video:
 
-[![Demonstration](https://img.youtube.com/vi/voSHbutAtww/0.jpg)](https://youtu.be/voSHbutAtww)
+[![Demonstration](https://img.youtube.com/vi/C_UEvtYW6ak/0.jpg)](https://youtu.be/C_UEvtYW6ak)
