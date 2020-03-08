@@ -1,0 +1,113 @@
+#videoContainer {
+	text-align: center;
+	background-color: #ccc;
+	border: 6px rgb(0, 102, 153) solid;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+#videoElement {
+	text-align: center;
+	width: 100%;
+	height: auto;
+}
+
+#mycanvas {
+	text-align: center;
+	width: 100%;
+	height: auto;
+}
+
+#mycanvas2 {
+	text-align: center;
+	width: 100%;
+}
+
+#description{
+	text-align: center;
+	font-size: 38px;
+	font-family: Arial,Helvetica,sans-serif;
+	color: rgb(40, 40, 40);
+	line-height: 1.2;
+
+
+	background-color: #444444;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
+}
+
+#storedInputContainer{
+	border: 6px rgb(0, 102, 153) solid;
+	border-radius: 10px;
+	overflow: hidden;
+	padding: 0% 2% 0% 2%;
+	margin-bottom: 6px;
+	height: 140px;
+}
+
+#storedInput{
+	font-size: 42px;
+}
+
+#predictedInput{
+	font-size: 42px;
+	color: rgb(52, 102, 255);
+}
+
+button{
+	font-size: 36px;
+	font-family: Arial,Helvetica,sans-serif;
+	background-color: rgb(238, 238, 238);
+	color: rgb(0, 102, 153);
+	border: 4px rgb(0, 102, 153) solid;
+	border-radius: 10px;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#smallButton{
+	font-size: 36px;
+	background-color: rgb(238, 238, 238);
+	color: rgb(0, 102, 153);
+	margin-left: 6px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#smallButton:active{
+	background-color: rgb(0, 102, 153);
+	color: rgb(222, 222, 222);
+}
+
+#camButton{
+	font-size: 36px;
+	background-color: rgb(238, 238, 238);
+	color: rgb(0, 102, 153);
+	left: 30px;
+	top: 10px;
+	width: auto;
+	height: auto;
+	position: absolute;
+}
+
+canvas{
+	display: block;
+}
+
+h1{
+	text-align: center;
+	font-size: 48px;
+	font-family: Arial,Helvetica,sans-serif;
+	font-weight: bold;
+	color: rgb(0, 102, 153);
+	margin: 0%;
+	margin-bottom: 20px;
+
+	text-shadow: 3px 2px 0px #fff, 6px 5px 0px rgba(0,0,0,0.15);
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sign2Text</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+  <script src="copyText.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css"> <!-- last referenced stylesheet prioritised -->
+</head>
+<body>
+  <div style="margin:1%">
+  <div class="col-md-3">
+    <h1>Sign2Text</h1>
+    <div id='description'>Sign2Text is a web application that allows American Sign Language (ASL)
+      to be translated in real time using your phone camera or webcam
+    </div>
+    <button onclick="mode('test')" id="test">Test</button>
+    <button onclick="mode('translate')" id="translate">Translate</button>
+    <button onclick="mode('learn')" id="learn">Learn</button>
+  </div>
+  <div class="col-md-6">
+  <table width=99%>
+    <tr>
+		<div id="videoContainer">
+		  <video autoplay="true" id="videoElement"></video>
+		  <canvas id="mycanvas" width="640" height="480"></canvas>
+		  <button onclick="access_webcam()" id="camButton">⇆</button>
+		</div>
+	</tr>
+	<tr>
+	  <td rowspan="2" width=85%>
+	  <div id="storedInputContainer">
+        <span id="storedInput"></span>
+        <span id="predictedInput">Loading...</span>
+      </div>
+	  </td>
+	  <td><button onclick="copyText()" id="smallButton">Copy</button></td>
+	</tr>
+	<tr>
+	  <td>
+        <button onclick="document.getElementById('storedInput').value = ''" id="smallButton">Clear</button>
+      </td>
+    </tr>
+    </tr>
+  </table>
+  </div>
+  <div class="col-md-3">
+    <canvas id="mycanvas3" width="200" height="200"></canvas>
+	<div id="videoContainer" style="background-color:#FFF">
+		<canvas id="mycanvas2" width="300" height="620"></canvas>
+    </div>
+  </div>
+    <script src="camera.js"></script>
+  </div>
+</body>
+</html>
