@@ -1,7 +1,8 @@
 function mode(func){
   var buttons = ['test', 'translate', 'learn'];
   mod = func;
-  document.getElementById('storedInput').textContent = '';
+  storedOut.textContent = '';
+  output.textContent = '';
   for(i = 0; i < 3; i++){
     var current = document.getElementById(buttons[i]);
     if(buttons[i] == func){
@@ -15,6 +16,8 @@ function mode(func){
   }
   then = new Date().getTime();
   if(mod == 'learn'){
+    rand_char = vals[Math.floor(Math.random() * 27)];
+    score = 0;
   	countDown();
   }
 }
@@ -25,19 +28,13 @@ function update_canvas(){
         canvas.height = 480;
         if(facing == "user")
         {
+            positions = [0, -80, -480, 640, -260, y, -200, 200];
             context.scale(-1, 1);
-            context.drawImage(video, 0, -80, -480, 640);    //Put image within 200/200 box and process whole thing
-            context.beginPath();
-            context.strokeStyle = "#0000FF";
-            context.strokeRect(-260, y, -200, 200);
             context3.drawImage(video, -20, -y-80, 480, 640);
         }
         else
         {
-            context.drawImage(video, 0, -80, 480, 640);
-            context.beginPath();
-            context.strokeStyle = "#0000FF";
-            context.strokeRect(20, y, 200, 200);
+            positions = [0, -80, 480, 640, 20, y, 200, 200];
         }
     }
     else{       //Landscape mode
@@ -45,20 +42,26 @@ function update_canvas(){
         canvas.height = 480;
         if(facing == "user")
         {
+            positions = [0, 0, -640, 480, -420, y, -200, 200];
             context.scale(-1, 1);
-            context.drawImage(video, 0, 0, -640, 480);
-            context.beginPath();
-            context.strokeStyle = "#0000FF";
-            context.strokeRect(-420, y, -200, 200);
             context3.drawImage(video, -20, -y, 640, 480);
         }
         else
         {
-            context.drawImage(video, 0, 0, 640, 480);
-            context.beginPath();
-            context.strokeStyle = "#0000FF";
-            context.strokeRect(20, y, 200, 200);
+            positions = [0, 0, 640, 480, 20, y, 200, 200];
         }
+    }
+    context.drawImage(video, positions[0], positions[1], positions[2], positions[3]);    //Put image within 200/200 box and process whole thing
+    context.beginPath();
+    context.strokeStyle = "#0000FF";
+    context.strokeRect(positions[4], positions[5], positions[6], positions[7]);
+    context.fillStyle = "green";
+	context.font = "64px Arial";
+	if(rand_char != -1){
+	    console.log(rand_char);
+    	if(facing == "user")
+        	context.scale(-1, 1);
+    	context.fillText(rand_char, canvas.width-150, 80);
     }
 }
 
@@ -97,7 +100,6 @@ async function predict(imgData){
 	var frame = await tf.browser.fromPixels(imgData);
 	frame = await frame.reshape([1, 200, 200, 3])
 	//Predict class
-	var vals = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_','Nothing'];
 	var pred = await model.predict(frame);		//Predict class outputs
 	var arr = String(pred.dataSync());	//Convert tensor to string
 	arr = arr.split(',').map(Number);	//Convert to String array
@@ -108,7 +110,7 @@ async function predict(imgData){
 	    graph(arr, vals);
 	}
 	confidence = Math.max.apply(Math, arr);
-	if(confidence > 0.4){
+	if(confidence > 0.6){
 		display(vals[arr.indexOf(confidence)]);	//Return correct prediction (max value pos))
 	}
 	else{
@@ -123,7 +125,7 @@ function graph(a, v){
 		context2.beginPath();
 		context2.lineWidth = "3";
 		context2.fillStyle = "blue";
-		context2.fillRect(30, 20 + i*22, 270*Number(a[i]), 12);
+		context2.fillRect(30, 20 + i*22, 260*Number(a[i]), 12);
 		context2.stroke();
 		context2.fillStyle = "red";
 		context2.font = "16px Arial";
@@ -138,9 +140,8 @@ function display(val){
 	else if(mod == 'translate'){
 		if(val == output.textContent && val != '...'){
             var now = new Date().getTime();
-            var seconds = (now-then)/1000;
-            console.log(seconds);
-			if(seconds > 1.5){
+            var sec = (now-then)/1000;
+			if(sec > 1.5){
 				if(val == '_'){
 					storedOut.textContent = storedOut.textContent + ' ';
 				}
@@ -156,7 +157,13 @@ function display(val){
 		output.textContent = val;
 	}
 	else if(mod == 'learn'){
-
+	    if(rand_char != -1){
+    	    //storedOut.textContent = "Current character: " + rand_char;
+            if(val == rand_char){
+                rand_char = vals[Math.floor(Math.random() * 27)];
+                score++;
+            }
+	    }
 	}
 }
 
@@ -164,10 +171,17 @@ function countDown(){
 	clearInterval(timer);
 	seconds = 60;
 	timer = setInterval(function() {
-		storedOut.textContent = seconds;
-		if (seconds <= 0 || mod != 'learn') {
+		output.textContent = seconds;
+		if (seconds <= 0){
 	    	clearInterval(timer);
-	    	storedOut.textContent = "You signed " + "" + "characters";
+	    	output.textContent = "";
+	    	rand_char = -1;
+	    	storedOut.textContent = "You signed " + score + " characters";
+		}
+		else if(mod != 'learn') {
+	    	clearInterval(timer);
+	    	rand_char = -1;
+	    	output.textContent = "";
 		}
 		seconds--;
 	}, 1000);
@@ -207,6 +221,10 @@ var storedOut = document.getElementById('storedInput');
 var output = document.getElementById('predictedInput');
 var facing= "environment";
 var then;
+var vals = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_','Nothing'];
+var rand_char = -1;
+var score = 0;
+var positions;
 video.style.display="none";
 canvas3.style.display="none";
 
@@ -243,8 +261,8 @@ function access_webcam(){
 }
 
 async function load_model(){
-    access_webcam();
-    console.log('CNN loading...')
+	access_webcam();
+	console.log('CNN loading...')
     model = await tf.loadLayersModel('https://raw.githubusercontent.com/Tyson3206792/ASLCNN/master/trained_models/a-zmulti_0/model.json');
     console.log('CNN loaded.')
     model.summary();
@@ -252,8 +270,8 @@ async function load_model(){
     w = model.inputs[0].shape[1];
     h = model.inputs[0].shape[2];
     update_canvas();
-    runDetection();
-    setInterval(update_canvas, 50);
+	runDetection();
+	setInterval(update_canvas, 50);
 }
 
 load_model();
