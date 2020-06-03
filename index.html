@@ -20,30 +20,31 @@
     <button onclick="mode('learn')" id="learn">Learn</button>
   </div>
   <div class="col-md-6">
-  <table width=99%>
-    <tr>
-		<div id="videoContainer">
-		  <video autoplay="true" id="videoElement"></video>
-		  <canvas id="mycanvas" width="640" height="480"></canvas>
-		  <select id="videoSource">Select Camera</select>
-		</div>
-	</tr>
+    <table>
 	<tr>
-	  <td rowspan="2" width=85%>
-	  <div id="storedInputContainer">
-        <span id="storedInput"></span>
-        <span id="predictedInput">Loading...</span>
-      </div>
+	  <td colspan="2">
+	    <div id="videoContainer">
+		<video autoplay="true" id="videoElement"></video>
+		<canvas id="mycanvas" width="640" height="480"></canvas>
+		<select id="videoSource">Select Camera</select>
+	    </div>
 	  </td>
-	  <td><button onclick="copyText()" id="smallButton">Copy</button></td>
 	</tr>
 	<tr>
-	  <td>
-        <button onclick="document.getElementById('storedInput').value = ''" id="smallButton">Clear</button>
-      </td>
-    </tr>
-    </tr>
-  </table>
+	    <td rowspan="2" width="85%">
+		<div id="storedInputContainer">
+		    <span id="storedInput"></span>
+		    <span id="predictedInput">Loading...</span>
+		</div>
+	    </td>
+	    <td><button onclick="copyText()" id="smallButton">Copy</button></td>
+	</tr>
+	<tr>
+	    <td>
+		<button onclick="document.getElementById('storedInput').innerHTML = ''" id="smallButton">Clear</button>
+	    </td>
+	</tr>
+    </table>
   </div>
   <div class="col-md-3">
     <canvas id="mycanvas3" width="200" height="200"></canvas>
